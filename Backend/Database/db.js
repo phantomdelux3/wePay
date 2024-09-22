@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 
-const run = async()=> (await mongoose.connect('mongodb+srv://admin:22584132@admin.ordu4ib.mongodb.net/?retryWrites=true&w=majority&appName=admin'))
+const run = async()=> (await mongoose.connect(''))    // ADD YOUR DATABASE LINK HERE 
 run()
 
 
