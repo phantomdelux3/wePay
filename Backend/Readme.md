@@ -25,8 +25,8 @@ These all commands installs all the required libraries to run the server.
 
 ## Run Server
 
-Add Your Database link to :- [Database](./Database/db.js) file
-To run the server locally :- 
+1. Add Your Database link to :- [Database](./Database/db.js) file \
+2. To run the server locally :- 
 
 ``` bash 
 node index.js
