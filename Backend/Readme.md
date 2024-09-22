@@ -47,7 +47,11 @@ All the requests first goes to **http://localhost:3000/api/v1**
 >    lastName: Your last name, \
 >    phoneNumber: Your 10 digit phone number,\
 >    dob: Your date of birth.
->  }
+>  } \
+> This end point creates the user in the database , /
+> Also creates the Account for the user. 
+
+ 
 
 > ## **Signin** 
 > it has a **POST** request (**http://localhost:3000/api/v1/signin**) \
