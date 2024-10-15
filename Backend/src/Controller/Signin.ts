@@ -12,7 +12,7 @@ Signin.post('/' , async(c)=>{
     if ((!username && !email) || !password) {     //checks user inputs
         return c.json({ error: 'Provide either username or email, and password is required' }, 400);
     }
-
+    
     try {
         const user = await prisma.user.findFirst({
             where: {
