@@ -26,9 +26,16 @@ Signup.post('/', async (c) => {
         lastName,
       },
     });
-    // Generate JWT token
-    const token = await jwt_create({ id: user.id, email: user.email,  })
+    const account = await prisma.accounts.create({
+        data: {
+          account : 2843277811016882,
+          username : user.username,
+          balance : 0,      
+        }
+    })
 
+    // Generate JWT token
+    const token = await jwt_create({ id: user.id, email: user.email, account_no : account.account })
     // Set the token as a cookie
     c.res.headers.set(
       'Set-Cookie', 
@@ -36,7 +43,7 @@ Signup.post('/', async (c) => {
     );
 
     
-    return c.json({ message: 'User created successfully', user });
+    return c.json({ message: 'User created successfully', user , account});
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
       // Check for unique constraint violation
