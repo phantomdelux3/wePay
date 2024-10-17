@@ -6,14 +6,13 @@
 
 generator client {
   provider = "prisma-client-js"
-  engineType = "library"
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
-  directUrl = env("DIRECT_DATABASE_URL")
 }
+
 
 model User {
   id        Int      @id @default(autoincrement())
@@ -29,7 +28,7 @@ model User {
 
 model Accounts {
   id Int @id @default(autoincrement())
-  account Int @default(autoincrement())
+  account Int @unique @default(autoincrement())
   username String @unique
   balance Int
 
