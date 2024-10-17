@@ -8,16 +8,29 @@ const prisma = getPrisma(db_uri);
 
 Search_User.get('/' ,jwtVerification, async (c,next)=>{                    // searches the user for adding friend or sending money 
     const {usertoSearch } = await c.req.json();
-    if(!usertoSearch){return c.json({error:'Username not specified'},400)}
+
     const gotUser = await prisma.user.findUnique({
-        where:{
-            username : usertoSearch,
-        }
-    })
+        where: {
+            username: usertoSearch,
+        },
+        select: {
+            firstName : true,
+            lastName : true,
+            email : true,
+            username : true,
+            Accounts: {
+                select: {
+                    account: true,
+                    balance: true,
+                },
+            },
+        },
+    });
+
     if(!gotUser){
         return c.json({message:'User not found'})
     }
-    return c.json({message:'found user', userEmail : gotUser.email , userUsername : gotUser.username })
+    return c.json({message:'found user', info : gotUser })
 })
 
 export default Search_User;

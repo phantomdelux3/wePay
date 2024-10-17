@@ -13,7 +13,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-
 model User {
   id        Int      @id @default(autoincrement())
   username  String   @unique
@@ -24,23 +23,26 @@ model User {
   lastName  String
 
   transactions Transactions[] @relation("UserTransactions")
+  Accounts     Accounts?
 }
 
 model Accounts {
-  id Int @id @default(autoincrement())
-  account Int @unique @default(autoincrement())
+  id       Int    @id @default(autoincrement())
+  account  Int    @unique @default(autoincrement())
   username String @unique
-  balance Int
+  balance  Int
+  user     User   @relation(fields: [username], references: [username])
 
+  @@index([username])
 }
 
 model Transactions {
-  id Int @id @default(autoincrement())
-  username String
-  user User @relation("UserTransactions", fields: [username], references: [username])
-  account Int
+  id            Int    @id @default(autoincrement())
+  username      String
+  user          User   @relation("UserTransactions", fields: [username], references: [username])
+  account       Int
   transactionID Int
-  amount Int
-  form String
-  to String
+  amount        Int
+  form          String
+  to            String
 }
