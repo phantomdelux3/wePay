@@ -5,6 +5,7 @@ import Signin from "../Controller/Signin";
 import Logout from "../Controller/Logout";
 import Search_User from "../Controller/Search_User";
 import User from "../Controller/User";
+import transaction from "../Controller/tarnsactions";
 const Route = new Hono();
 
 const db_uri = 'prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiMWY3NTNmNWEtMzhjMC00MmJlLWFiMDUtNTNkODg5MzVmNGIxIiwidGVuYW50X2lkIjoiMTU0N2I0YjlhMzNjNjNhNTRjNGFjNDk4ODhjMmFhMjEyZDkyNWE4YzcyOWViMzdiOTY3OTViYzY4YWI5NjJiOCIsImludGVybmFsX3NlY3JldCI6IjA2ZTdkMDNmLWRmZTctNDBiYi1iNzkyLTRhY2FkYjA5MDk2NCJ9.3c3tFYT_co98p0IPceNGfPUl1JBg3DyPmzd0N8YbAiY';
@@ -14,6 +15,7 @@ Route.route('/login', Signin);
 Route.route('/logout', Logout);
 Route.route('/search', Search_User);
 Route.route('/user', User);
+Route.route('/transaction', transaction);
 
 Route.delete('/', async (c) => {          //delete route to delete all the useres for testing porpose only
     console.log("Delete request received"); // Add this line

@@ -6,7 +6,7 @@ import { jwt_create } from '../Middleware/jwtAuthentication';
 
 const Signup = new Hono();
 const db_uri = 'prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiMWY3NTNmNWEtMzhjMC00MmJlLWFiMDUtNTNkODg5MzVmNGIxIiwidGVuYW50X2lkIjoiMTU0N2I0YjlhMzNjNjNhNTRjNGFjNDk4ODhjMmFhMjEyZDkyNWE4YzcyOWViMzdiOTY3OTViYzY4YWI5NjJiOCIsImludGVybmFsX3NlY3JldCI6IjA2ZTdkMDNmLWRmZTctNDBiYi1iNzkyLTRhY2FkYjA5MDk2NCJ9.3c3tFYT_co98p0IPceNGfPUl1JBg3DyPmzd0N8YbAiY';
-
+console.log("hi")
 Signup.post('/', async (c) => {
   const prisma = getPrisma(db_uri)
   const { username ,email, password , firstName , lastName } = await c.req.json(); //destructures the values
@@ -48,12 +48,14 @@ Signup.post('/', async (c) => {
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
       // Check for unique constraint violation
+      //@ts-ignore
       if (error.code === 'P2002') {
         return c.json({ error: 'Email/Username already in use' }, 400); 
       }
     }
     
     console.error(error);
+    //@ts-ignore
     return c.json({ error: 'Failed to create user', details: error.message }, 500);
   }finally {
     await prisma.$disconnect();

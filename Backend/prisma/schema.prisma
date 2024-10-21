@@ -28,8 +28,8 @@ model User {
 
 model Accounts {
   id       Int    @default(autoincrement())
-  account  Int    @id @unique @default(autoincrement())
-  username String @unique
+  account  Int    @unique @default(autoincrement())
+  username String @id @unique
   balance  Int
   user     User   @relation(fields: [username], references: [username])
 
@@ -41,8 +41,9 @@ model Transactions {
   username      String
   user          User   @relation("UserTransactions", fields: [username], references: [username])
   account       Int
+  type          String
   transactionID Int
   amount        Int
-  form          String
+  from          String
   to            String
 }
