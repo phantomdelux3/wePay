@@ -14,8 +14,8 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique
+  id        Int      @default(autoincrement())
+  username  String   @id @unique
   email     String   @unique
   password  String
   createdAt DateTime @default(now())
@@ -27,8 +27,8 @@ model User {
 }
 
 model Accounts {
-  id       Int    @id @default(autoincrement())
-  account  Int    @unique @default(autoincrement())
+  id       Int    @default(autoincrement())
+  account  Int    @id @unique @default(autoincrement())
   username String @unique
   balance  Int
   user     User   @relation(fields: [username], references: [username])
