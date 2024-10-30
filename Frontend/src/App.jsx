@@ -6,11 +6,13 @@ import { Signin } from './pages/signin'
 import { Dashboard } from './pages/dashboard'
 import { Profile } from './pages/profile' 
 import { Deposit } from './pages/Deposit'
+import { Home } from './pages/home'
 
 function App() {
   return <>
   <BrowserRouter>
-    <Routes>0000000
+    <Routes>
+      <Route path='' element={<Home/>} />
       <Route path='/signup' element={<Signup title='SignUp'/>} />
       <Route path='/signin' element={ <Signin title='SignIn'/>} />
       <Route path='/deposit' element={<Deposit/>} />

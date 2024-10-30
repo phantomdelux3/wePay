@@ -6,15 +6,18 @@ import { jwt_create } from '../Middleware/jwtAuthentication';
 
 const Signup = new Hono();
 const db_uri = 'prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiMWY3NTNmNWEtMzhjMC00MmJlLWFiMDUtNTNkODg5MzVmNGIxIiwidGVuYW50X2lkIjoiMTU0N2I0YjlhMzNjNjNhNTRjNGFjNDk4ODhjMmFhMjEyZDkyNWE4YzcyOWViMzdiOTY3OTViYzY4YWI5NjJiOCIsImludGVybmFsX3NlY3JldCI6IjA2ZTdkMDNmLWRmZTctNDBiYi1iNzkyLTRhY2FkYjA5MDk2NCJ9.3c3tFYT_co98p0IPceNGfPUl1JBg3DyPmzd0N8YbAiY';
-console.log("hi")
+
+
 Signup.post('/', async (c) => {
   const prisma = getPrisma(db_uri)
-  const { username ,email, password , firstName , lastName } = await c.req.json(); //destructures the values
+  const { username ,email, password , firstName , lastName , confirmPassword} = await c.req.json(); //destructures the values
 
-  if(!username || !email || !password|| !firstName || !lastName){   //checks is the user has filled all the constraints
+  if(!username || !email || !password|| !firstName || !lastName || !confirmPassword){   //checks is the user has filled all the constraints
     return c.json({ error: 'Fill in all the values' }, 400)
   }
-
+  if(password !== confirmPassword){
+    return c.json({error: 'Password does not match!!'}, 400 )
+  }
   const hashedPassword = await bcrypt.hash(password, 10);        // hashes the password to store
 
   try {  
@@ -44,7 +47,7 @@ Signup.post('/', async (c) => {
     );
 
     
-    return c.json({ message: 'User created successfully', filteruser , account});
+    return c.json({ message: 'User created successfully',jwt: token, filteruser , account});
   } catch (error) {
     if (error instanceof PrismaClientKnownRequestError) {
       // Check for unique constraint violation

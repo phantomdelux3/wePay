@@ -21,6 +21,8 @@ Route.delete('/', async (c) => {          //delete route to delete all the usere
     console.log("Delete request received"); // Add this line
     const prisma = getPrisma(db_uri);
     try {
+      await prisma.transactions.deleteMany({})
+      await prisma.accounts.deleteMany({})
       await prisma.user.deleteMany({});
       return c.json({ message: 'All users deleted.' }); // Send a response back
     } catch (error) {

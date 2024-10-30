@@ -21,4 +21,11 @@ User.get('/' ,jwtVerifyMiddleware, async (c)=>{                    // searches t
     return c.json({message:'found user', userEmail : gotUser.email , userUsername : gotUser.username })
 })
 
+User.put('/avatar' , jwtVerifyMiddleware , async (c)=>{
+    const {avatar} =  await c.req.json()
+    const avatar_update  = await prisma.user.update({
+        where: { username: c.req.decoded_token.username },
+        data: { avatar : avatar },
+    });
+})
 export default User;

@@ -3,6 +3,11 @@ import * as jwt from "jsonwebtoken";
 
 const JWT_SECRET="dsffdjklaoicnvkabjv301oabq2091@$@#$^tsdbjkgdifnoa9er@Q#ridbskjbvn2#)Fasodvbsdbfdkffanoid_Aheongrucvn"
 
+declare module 'hono' {
+  interface HonoRequest {
+    decoded_token?: any; // Add 'decoded_token' property (you can type it more strictly)
+  }
+}
 
 export function jwt_create(data :any){
     const token = jwt.sign(data , JWT_SECRET )
@@ -23,12 +28,13 @@ export default async function jwtVerifyMiddleware(c:Context , next:Next) {
   
     try {
       const verifiedToken = await jwt.verify(token, JWT_SECRET);
-      if(!verifiedToken){return c.json({ error: 'Invalid token' }, 401);}  
+      if(!verifiedToken){return c.json({ error: 'Invalid token' }, 401);}
+      c.req.decoded_token = verifiedToken;  
       return next()
     } catch (error) {
       return c.json({ error: 'Authorization error' }, 403);
     }
+    
   };
-
 
 

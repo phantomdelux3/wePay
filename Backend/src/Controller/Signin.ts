@@ -31,13 +31,13 @@ Signin.post('/' , async(c)=>{
         if(!isMatch){return c.json({error:'Password is incorrect'},401)} 
     
         // Generate JWT token
-        const token = await jwt_create({ id: user.id, email: user.email,})
+        const token = await jwt_create({ username : user.username ,id: user.id, email: user.email,})
     
         // Set the token as a cookie
         c.res.headers.set('Set-Cookie', `token=${token}; HttpOnly; Path=/; Secure; SameSite=Strict; Max-Age=3600;`);
         
         
-        return c.json({Message: 'logged in'} , 200)
+        return c.json({Message: 'logged in' , jwt:token} , 200)
             
     } catch (error) {
         return c.json({error:'error logging in.' , detail : error},500)
